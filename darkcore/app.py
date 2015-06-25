@@ -25,7 +25,7 @@ class Darkcore(bottle.Bottle):
 
         # attach reference to self
         for c in self.contents:
-            c.connect(self, container=None)
+            c.connect(self)
 
         self.template = os.path.join(current_dir, 'views', template)
 
