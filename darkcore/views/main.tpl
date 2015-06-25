@@ -14,9 +14,7 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/js/jquery-1.11.3.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    {{ !script }}
   </head>
 
   <body>

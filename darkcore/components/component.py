@@ -22,6 +22,11 @@ class Component(object):
             # contents must be a list
             contents = [contents]
         self.contents = contents
+        for c in self.contents:
+            self._validate_child(c)
+            if isinstance(c, Component):
+                c.container = self
+                c._validate_container(self)
 
         self.attributes = attributes
         self._validate_attributes()
@@ -34,12 +39,12 @@ class Component(object):
         for attr in self._attributes_mandatory:
             if attr not in self.attributes:
                 msg = '{0} needs "{1}" attribute'
-                raise ValueError(msg.format(self.__class__, attr))
+                raise ValueError(msg.format(self.__class__.__name__, attr))
 
         for attr in self._attributes_prohibited:
             if attr in self.attributes:
                 msg = '{0} cannot accept "{1}" attribute'
-                raise ValueError(msg.format(self.__class__, attr))
+                raise ValueError(msg.format(self.__class__.__name__, attr))
 
     def _validate_container(self, container):
         """Check container (parent) is None or allowed instance"""
@@ -48,8 +53,9 @@ class Component(object):
         elif isinstance(container, self._allowed_container):
             return container
         else:
-            msg = '{0} cannot take {1} as a container'
-            raise ValueError(msg.format(self.__class__, self._allowed_contaner))
+            msg = '{0} can only take {1} as a container'
+            raise ValueError(msg.format(self.__class__.__name__,
+                                        self._allowed_contaner))
 
     def _validate_child(self, child):
         """Check contents (child) is None or allowed instance"""
@@ -58,20 +64,16 @@ class Component(object):
         elif isinstance(child, self._allowed_child):
             return child
         else:
-            msg = '{0} cannot take {1} as children'
-            raise ValueError(msg.format(self.__class__, self._allowed_child))
+            msg = '{0} can only take {1} as children'
+            raise ValueError(msg.format(self.__class__.__name__,
+                                        self._allowed_child))
 
-    def connect(self, app, container=None):
+    def connect(self, app):
         """Add reference to app and container"""
         self.app = app
-
-        container = self._validate_container(container)
-        self.container = container
-
         for c in self.contents:
             if isinstance(c, Component):
-                self._validate_child(c)
-                c.connect(app, container=self)
+                c.connect(app)
 
     @property
     def _param_args(self):

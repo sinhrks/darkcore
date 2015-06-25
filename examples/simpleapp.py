@@ -22,7 +22,7 @@ class MyApp(Darkcore):
 
 if __name__ == "__main__":
 
-    app = MyApp('Sample App',
+    app = MyApp('Sample App', use_CDN=True,
                 contents = [
                 Text(name='text', contents='textinput'),
                 Checkbox(name='check1', contents='check1', value=1),

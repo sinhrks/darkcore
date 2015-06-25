@@ -23,9 +23,7 @@ class ListButton(Component):
     def _allowed_parent(self):
         return List
 
-    template = """
-    <button type="button" class="list-group-item">{{ !content }}</button>
-    """
+    template = """<button type="button" class="list-group-item">{{ !content }}</button>"""
 
 
 class TabPanel(Component):
@@ -34,14 +32,12 @@ class TabPanel(Component):
     def _allowed_child(self):
         return Tab
 
-    template = """
-        <ul {{ !attributes }} class="nav nav-tabs">
-         {{ !tabs }}
+    template = """      <ul {{ !attributes }} class="nav nav-tabs">
+        {{ !tabs }}
         </ul>
         <div {{ !attributes }} class="tab-content">
-         {{ !content }}
-        </div>
-        """
+        {{ !content }}
+        </div>"""
 
     def _repr_html_(self):
         active_tab_num = 0
@@ -60,11 +56,9 @@ class Tab(Component):
     def _allowed_parent(self):
         return TabPanel
 
-    template = """
-    <div {{ !attributes }} class="{{ active }}" >
-    {{ !content }}
-    </div>
-    """
+    template = """          <div {{ !attributes }} class="{{ active }}" >
+            {{ !content }}
+            </div>"""
 
     def _repr_html_(self, active=False):
         if active:
