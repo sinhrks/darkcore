@@ -3,20 +3,15 @@ import pandas as pd
 
 from darkcore import *
 
+df = pd.DataFrame(np.random.randn(3, 3))
 
 class MyApp(Darkcore):
 
-    def df1(self, params):
-        print(params)
-        df = pd.DataFrame(np.random.randn(3, 3))
+    def get_data(self, params):
         return df
 
-    def df2(self, params):
-        df = pd.DataFrame(np.random.randn(5, 5))
-        return df
-
-    def chart(self, params):
-        ax = self.df1(params).plot(figsize=(4, 3))
+    def get_chart(self, params):
+        ax = self.get_data(params).plot(figsize=(4, 3))
         return ax
 
 
@@ -24,7 +19,6 @@ if __name__ == "__main__":
 
     app = MyApp('Sample App', use_CDN=True,
                 contents = [TabPanel(name='tabgroup',
-                    contents=[Tab(id='tab1', name='Tab1', contents='df1'),
-                              Tab(id='tab2', name='Tab2', contents='df2'),
-                              Tab(id='tab3', name='Tab3', contents='chart')])])
-    app.run(port=5020)
+                    contents=[Tab(id='tab1', name='Tab1', contents='get_data'),
+                              Tab(id='tab2', name='Tab2', contents='get_chart')])])
+    app.run(port=5024)

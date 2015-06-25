@@ -1,5 +1,6 @@
 
 import pandas as pd
+
 from darkcore.components.component import Component
 
 
@@ -10,20 +11,16 @@ class Input(Component):
 
 class Checkbox(Input):
 
-    template = """
-    <input type="checkbox" {{ !attributes }} form="darkcore"> {{ content }}
-    """
+    template = """<label><input type="checkbox" {{ !attributes }} form="darkcore">{{ content }}</label>"""
 
 
 class Radio(Input):
 
-    template = """
-    <input type="radio" {{ !attributes }} form="darkcore"> {{ content }}
-    """
+    template = """<label><input type="radio" {{ !attributes }} form="darkcore">{{ content }}</label>"""
 
 
 class Text(Input):
+    _attributes_prohibited = ['type', 'form', 'class']
 
-    template = """
-    <input type="text" class="form-control" {{ !attributes }} form="darkcore">
-    """
+    template = """<input type="text" class="form-control" {{ !attributes }} form="darkcore">"""
+
