@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+
+install:
+  - sudo pip install conda
+  - sudo conda init
+  # - sudo conda update conda --yes
+  - deps='pip numpy scipy matplotlib pandas nose'
+  - conda create -p $HOME/py --yes $deps "python=$TRAVIS_PYTHON_VERSION"
+  - export PATH=$HOME/py/bin:$PATH
+  - "pip install -r requirements.txt"
+
+script: nosetests
+
+after_success:
+  - coveralls
+
