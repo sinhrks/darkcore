@@ -82,12 +82,16 @@ class Component(object):
 
     @property
     def template(self):
-        raise NotImplementedError
+        # draw contents as it is
+        return '{{ !content }}'
 
     @property
     def attributes_html(self):
         """Return html representations of attributes in the main tag"""
-        attrs = ['{0}="{1}"'.format(k, v) for k, v in pd.compat.iteritems(self.attributes)]
+
+        # guarantee the attribute sort order
+        keys = sorted(pd.compat.iterkeys(self.attributes))
+        attrs = ['{0}="{1}"'.format(k, self.attributes[k]) for k in keys]
         return ' '.join(attrs)
 
     @property
@@ -105,7 +109,7 @@ class Component(object):
         elif hasattr(content, '_repr_html_'):
             return content._repr_html_(**kwargs)
 
-        elif isinstance(content, (str, unicode)):
+        elif isinstance(content, pd.compat.string_types):
             if not self.app is None and hasattr(self.app, content):
                 c = getattr(self.app, content)(self._param_args)
                 return self._render_children(c)

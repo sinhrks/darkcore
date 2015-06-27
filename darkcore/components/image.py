@@ -27,14 +27,11 @@ class Image(Component):
         content = self.contents[0]
         if isinstance(content, axes.Axes):
             content = content.get_figure()
-        if isinstance(content, figure.Figure):
-            from matplotlib.backends.backend_agg import FigureCanvasAgg
-            content = FigureCanvasAgg(content)
 
-        from matplotlib.backends.backend_agg import FigureCanvasAgg
-        if isinstance(content, FigureCanvasAgg):
-            buf = pd.compat.cStringIO()
-            content.print_png(buf)
+        if isinstance(content, figure.Figure):
+            buf = pd.compat.BytesIO()
+            content.savefig(buf, format='png')
+            buf.seek(0)
             data = buf.getvalue()
             data = base64.b64encode(data)
             return data

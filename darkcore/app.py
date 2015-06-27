@@ -6,7 +6,7 @@ import pandas as pd
 
 import bottle
 
-from components import Component
+from darkcore.components import Component
 
 
 current_dir = os.path.dirname(__file__)
@@ -19,13 +19,10 @@ class Darkcore(bottle.Bottle):
         super(Darkcore, self).__init__()
 
         self.title = title
-        if not isinstance(contents, list):
-            contents = [contents]
-        self.contents = contents
 
+        self.contents = Component(contents)
         # attach reference to self
-        for c in self.contents:
-            c.connect(self)
+        self.contents.connect(self)
 
         self.template = os.path.join(current_dir, 'views', template)
 
@@ -59,16 +56,9 @@ class Darkcore(bottle.Bottle):
     <script src="/js/bootstrap.min.js"></script>"""
 
     def _render(self):
-        content = [self._render_content(c) for c in self.contents]
-        content = ''.join(content)
         return bottle.template(self.template, title=self.title,
-                               script=self.script_html, content=content)
-
-    def _render_content(self, content):
-        if isinstance(content, Component):
-            return content._repr_html_()
-        else:
-            return 'UNKNOWN'
+                               script=self.script_html,
+                               content=self.contents._repr_html_())
 
     def run(self, reloader=False, **kwargs):
         return super(Darkcore, self).run(reloader=reloader, **kwargs)

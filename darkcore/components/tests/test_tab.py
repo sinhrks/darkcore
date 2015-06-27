@@ -9,14 +9,16 @@ class TestList(tm.TestCase):
 
     def test_validation(self):
         t = darkcore.Text(name='text', contents='input')
-        self.assertRaises(ValueError, darkcore.List, name='group', contents=[t])
+        with tm.assertRaises(ValueError):
+            darkcore.List(name='group', contents=[t])
 
 
 class TestTab(tm.TestCase):
 
     def test_validation(self):
         t = darkcore.Text(name='text', contents='input')
-        self.assertRaises(ValueError, darkcore.TabPanel, name='group', contents=[t])
+        with tm.assertRaises(ValueError):
+            darkcore.TabPanel(name='group', contents=[t])
 
         tabs = darkcore.TabPanel(name='group', contents=[darkcore.Tab(name='x', contents='cont1')])
         expected = """      <ul name="group" class="nav nav-tabs">
@@ -31,7 +33,7 @@ class TestTab(tm.TestCase):
 
         tabs = darkcore.TabPanel(name='group', contents=[darkcore.Tab(name='x', contents='cont1'),
                                                          darkcore.Tab(name='y', contents='cont2')])
-        expected = """       <ul name="group" class="nav nav-tabs">
+        expected = """      <ul name="group" class="nav nav-tabs">
         <li class="active"><a href="#None" data-toggle="tab">x</a></li><li><a href="#None" data-toggle="tab">y</a></li>
         </ul>
         <div name="group" class="tab-content">

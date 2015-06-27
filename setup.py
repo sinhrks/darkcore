@@ -37,7 +37,10 @@ setup(name=PACKAGE,
       url='http://darkcore.readthedocs.org/en/stable',
       license = 'BSD',
       packages=find_packages(),
-      package_data = {'darkcore': ['bootstrap/*', 'views/*']},
+      package_data = {'darkcore': ['bootstrap/css/*',
+                                   'bootstrap/fonts/*'
+                                   'bootstrap/js/*',
+                                   'views/*']},
       install_requires=list(read(REQUIREMENTS).splitlines())
       )
 

@@ -1,3 +1,3 @@
 
-from app import Darkcore
-from components import *
+from darkcore.app import Darkcore
+from darkcore.components import *

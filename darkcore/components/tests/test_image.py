@@ -21,12 +21,8 @@ class TestImage(tm.TestCase):
 
         im = darkcore.Image(ax)
         # because output is very long, test the first part
-        expected = ('iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+VemSAAAABHNCSVQICA'
-                    'gIfAhkiAAAAAlwSFlzAAAMTQAADE0B0s6tTgAAHf9JREFUeJzt3X9QVNfZ'
-                    'B/DvIlA0Cygd47YTaxRNkxiHmVIr0Wga08QfNWgaE0iNdTQaoU6Lbt6JiI'
-                    'nBRKLbNpNQG4lKgxJjgpOObKSMq4CR6eiK2gmxo8wI+oczFeJUWJYf6yLs'
-                    '+8fN4gK7y+7lnnvOgeczk5nAXvZ+OePDvXvvuecxnDp1ygNCiJQieAcghK'
-                    'hHBUyIxKiACZEYFTAhEqMCJkRiVMCESIwKmBCJUQETIjEqYEIkRgVMiMSo')
+        expected = pd.compat.str_to_bytes('iVBORw0KGgoAAAANSUhEUgAAASwAAAEsC'
+                                          'AYAAAB5fY51AAAABHNCSVQICAg')
         self.assertTrue(im.contents_html.startswith(expected))
 
 
